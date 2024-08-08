@@ -1,0 +1,774 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1200px"> <!-- Tetapkan lebar viewport tetap untuk desktop -->
+    <title>Website Jualan Produk</title>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.8.1/font/bootstrap-icons.min.css">
+    <style>
+        body {
+            font-size: 2rem;
+            /* or 1em */
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #ffffff;
+            color: #000000;
+            transition: background-color 0.3s, color 0.3s;
+            width: 1200px;
+            /* Tetapkan lebar tetap untuk desktop */
+            overflow-x: hidden;
+            /* Menghindari scroll horizontal */
+        }
+
+        .dark-mode {
+            background-color: #000000;
+            color: #ffffff;
+        }
+
+        header {
+            background: url('https://img.freepik.com/free-vector/fashion-collection-twitter-header-template_23-2149988054.jpg?t=st=1722907263~exp=1722910863~hmac=587a473b5e6b8f9cf6c3864dcc8a7491a0ce3c8878924e9de884bf9123e26f7f&w=1380') no-repeat center center;
+            background-size: cover;
+            color: white;
+            padding: 110px;
+            position: relative;
+            text-align: center;
+            padding: 6rem;
+            /* or 3em or 20% */
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            background: url('https://img.freepik.com/free-vector/fashion-collection-twitter-header-template_23-2149') no-repeat center center;
+
+        }
+
+        .search-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 20px 0;
+        }
+
+        .search-container input[type="text"] {
+            width: 5000px;
+            /* Perbesar lebar pencarian */
+            padding:30px;
+            border: none;
+            border-radius: 5px;
+            margin-right: 10px;
+            opacity: 0.8;
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .search-container button {
+            padding: 30px 40px;
+            border: none;
+            border-radius: 5px;
+            background-color: #ff6600;
+            color: white;
+            cursor: pointer;
+        }
+
+        .search-container button:hover {
+            background-color: #e55d00;
+        }
+
+        .nav-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 10px 0;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            padding: 10px 20px;
+            background-color: rgba(0, 0, 0, 0.3);
+            border-radius: 5px;
+        }
+
+        .nav-links a:hover {
+            background-color: rgba(255, 255, 255, 0.3);
+        }
+
+        .mode-toggle {
+            font-size: 18px;
+            cursor: pointer;
+            background: #fff;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            margin-left: 10px;
+        }
+
+        .ad-slider {
+            overflow-x: auto;
+            scrollbar-width: none;
+            /* hide scrollbar */
+            -ms-overflow-style: none;
+            /* hide scrollbar for IE and Edge */
+            padding: 10px;
+            display: flex;
+            flex-wrap: nowrap;
+        }
+
+        .ad-slider::-webkit-scrollbar {
+            display: none;
+            /* hide scrollbar for Chrome and Safari */
+        }
+
+        .ad {
+            flex: 0 0 300px;
+            /* set width of each ad */
+            margin: 10px;
+            cursor: grab;
+            /* change cursor to grab hand */
+        }
+
+        .ad:active {
+            cursor: grabbing;
+            /* change cursor to grabbing hand when dragging */
+        }
+
+        .ad-item {
+            flex: 0 0 auto;
+            width: 1000px;
+            height: 800px;
+            margin-right: 10px;
+            transition: transform 0.1s ease;
+        }
+
+        .ad-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 0px;
+        }
+
+        .ad-item.active {
+            transform: scale(1.1);
+        }
+
+        @keyframes scroll {
+            0% {
+                transform: translateX(0);
+            }
+
+            100% {
+                transform: translateX(-100%);
+            }
+        }
+
+        .links-section {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .links-section a {
+            font-size: 24px;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .links-section a:hover {
+            color: #ff6600;
+        }
+
+        .product-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+            padding: 20px;
+
+        }
+
+        .product {
+            flex: 0 0 calc(33.333% - 40px);
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            border-radius: 10px;
+            overflow: hidden;
+            text-align: center;
+            background-color: #fff;
+        }
+
+        .product img {
+            width: 100%;
+            height: 500px;
+            object-fit: cover;
+        }
+
+        .product h3 {
+            font-size: 18px;
+            margin: 10px 0;
+            text-align: center;
+        }
+
+        .product p {
+            font-size: 16px;
+            color: #595555;
+        }
+
+        .product button {
+            padding: 20px 30px;
+            border: none;
+            border-radius: 5px;
+            background-color: #ff6600;
+            color: white;
+            cursor: pointer;
+            margin-bottom: 10px;
+            font-size: 25px;
+        }
+
+        .favorite-icon {
+            font-size: 50px;
+            color: #999;
+            cursor: pointer;
+            transition: color 0.3s ease;
+        }
+
+        .favorite-icon.favorited {
+            color: red;
+            transform: scale(1.2);
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .category-section {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .category-title {
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .category-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            justify-content: center;
+        }
+
+        .category {
+            text-align: center;
+            flex: 0 0 calc(33.333% - 20px);
+        }
+
+        .category img {
+            width: 100%;
+            height: auto;
+            object-fit: cover;
+            border-radius: 10px;
+        }
+
+        .bottom-header {
+            display: flex;
+            justify-content: space-around;
+            padding: 10px;
+            background-color: #f8f8f8;
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .bottom-header a {
+            font-size: 35px;
+            color: #333;
+            text-decoration: none;
+        }
+
+        .bottom-header a:hover {
+            color: #ff6600;
+        }
+
+        .footer {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .footer h2 {
+            margin-bottom: 10px;
+        }
+
+        .footer-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .footer-links a:hover {
+            color: #ff6600;
+        }
+
+        .footer-form {
+            margin-top: 20px;
+        }
+
+        .footer-form input,
+        .footer-form textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            margin-bottom: 10px;
+        }
+
+        .footer-form button {
+            padding: 60px 80px;
+            border: none;
+            border-radius: 5px;
+            background-color: #ff6600;
+            color: white;
+            cursor: pointer;
+            font-size: 35px;
+        }
+
+        .center-text {
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body>
+    <header>
+        <div class="content">
+            <div class="logo">Logo</div>
+            <div class="search-container">
+                <input type="text" id="search-input" placeholder="Cari produk...">
+                <button onclick="search()" id="search-button">Cari</button>
+                <button onclick="resetSearch()" id="reset-button">Reset</button>
+                <button class="mode-toggle" onclick="toggleMode()"><i class="bi bi-moon"></i></button>
+            </div>
+        </div>
+        <div class="nav-links">
+            <a href="#">Home</a>
+            <a href="#">Produk</a>
+            <a href="#">Kategori</a>
+            <a href="#">Tentang Kami</a>
+            <a href="#">Kontak</a>
+        </div>
+        </div>
+    </header>
+
+    <div class="ad-container">
+        <div class="ad-title"></div>
+        <div class="ad-slider">
+            <div class="ad-item active">
+                <a href="https://example.com/ads1" target="_blank">
+                    <img src="https://img.freepik.com/free-psd/hand-drawn-spring-sale-facebook-template_23-2150137300.jpg?t=st=1722906459~exp=1722910059~hmac=1adaafd2891f742ca9e306436f91be41d75c8e41d7813af02e8b2597002fd580&w=1480"
+                        alt="Iklan 1">
+                </a>
+            </div>
+            <div class="ad-item">
+                <a href="https://example.com/ads2" target="_blank">
+                    <img src="https://img.freepik.com/free-vector/flat-design-fashion-week-instagram-stories_23-2151084394.jpg?t=st=1722906566~exp=1722910166~hmac=ddbce56892c3b6dcc41d4c8a3112900ccbe1e9bb6b5c59fa24becadde5416ac7&w=1380"
+                        alt="Iklan 2">
+                </a>
+            </div>
+            <div class="ad-item">
+                <a href="https://example.com/ads3" target="_blank">
+                    <img src="https://img.freepik.com/free-psd/fashion-business-facebook-template_23-2149938390.jpg?t=st=1722906610~exp=1722910210~hmac=3d4b40546f9ef0892bffa3d432fe55d1915f11b68b343042bda673ce17360ec6&w=1480"
+                        alt="Iklan 3">
+                </a>
+            </div>
+            <div class="ad-item">
+                <a href="https://example.com/ads3" target="_blank">
+                    <img src="https://img.freepik.com/free-vector/organic-sale-ig-stories_23-2148591518.jpg?t=st=1722906742~exp=1722910342~hmac=91c74e1fee009b7dea9a10e3b112b31cc24810e90217b01076c1537cb1c84dc3&w=1380"
+                        alt="Iklan 3">
+                </a>
+            </div>
+            <div class="ad-item">
+                <a href="https://example.com/ads3" target="_blank">
+                    <img src="https://img.freepik.com/free-vector/abstract-sale-instagram-post-collection-with-photo_23-2148286928.jpg?t=st=1722906767~exp=1722910367~hmac=8b355d97dae861e3a052583290b306fa3693119546f97944ed530bc5cb1b291c&w=1380"
+                        alt="Iklan 3">
+                </a>
+            </div>
+            <div class="ad-item">
+                <a href="https://example.com/ads3" target="_blank">
+                    <img src="https://img.freepik.com/free-vector/fashion-sale-banners-with-photo_23-2148219781.jpg?t=st=1722906826~exp=1722910426~hmac=c6f2d68fe085fcb3806b469ae8d02f25e151d4c45d1da4fa816ff0b05fd27b45&w=1380"
+                        alt="Iklan 3">
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <section id="products">
+        <h2 class="center-text">Daftar Produk</h2>
+        <div id="product-list" class="product-list">
+            <!-- Produk akan dimuat di sini dengan JavaScript -->
+        </div>
+    </section>
+    <h2 class="center-text">BEST OF PRODUCT</h2>
+    <img src="https://img.freepik.com/free-psd/shoes-sale-social-media-post-square-banner-template-design_505751-2948.jpg?t=st=1722919354~exp=1722922954~hmac=b25fcd392c9facb18ad0a8804e0657a62023120d64f71194e8b1ed458dd2d1ea&w=826"
+        alt="Gambar Produk" width="100%" />
+    <img src="https://img.freepik.com/free-psd/shoes-sale-social-media-post-square-banner-template-design_505751-2904.jpg?t=st=1722918911~exp=1722922511~hmac=882952f08fc843ca08b5ab1825105fc2dfef9081f832dca4afbed78d33bae7c0&w=826"
+        alt="Gambar Produk" width="100%" />
+    <img src="https://img.freepik.com/free-psd/sneakers-shoes-social-media-template_505751-3352.jpg?t=st=1722919656~exp=1722923256~hmac=8ede3f867d6da6e4462a74e49bfe6a7cc3393952e9d040b0d2bbd3a253184514&w=826"
+        alt="Gambar Produk" width="100%" />
+    <section id="favorite-products">
+        <h2 class="center-text">Produk Favorit</h2>
+        <div id="favorite-products-list" class="product-list">
+            <!-- Produk favorit akan dimuat di sini dengan JavaScript -->
+        </div>
+    </section>
+    <div class="ad-container">
+        <div class="ad-title"></div>
+        <div class="ad-slider">
+            <div class="ad-item active">
+                <a href="https://example.com/ads1" target="_blank">
+                    <img src="https://img.freepik.com/free-vector/fashion-sale-banner-collection-with-photo_52683-13110.jpg?t=st=1722935646~exp=1722939246~hmac=f91e48f7897ffd4518b525e199aebdb77eead957bb9d016564f3310d04672cb0&w=900"
+                        alt="Iklan 1">
+                </a>
+            </div>
+            <div class="ad-item">
+                <a href="https://example.com/ads2" target="_blank">
+                    <img src="https://img.freepik.com/free-psd/women-s-fashion-instagram-stories_23-2150861523.jpg?t=st=1722935691~exp=1722939291~hmac=62249e74fe965b6abcb67eb1177de3b2acf6d271d14743bbc45a495e5d6c6447&w=900"
+                        alt="Iklan 2">
+                </a>
+            </div>
+            <div class="ad-item">
+                <a href="https://example.com/ads3" target="_blank">
+                    <img src="https://img.freepik.com/free-vector/colorful-sale-instagram-stories-set_23-2148580553.jpg?ga=GA1.1.964672678.1698754364&semt=ais_hybrid"
+                        alt="Iklan 3">
+                </a>
+            </div>
+            <div class="ad-item">
+                <a href="https://example.com/ads3" target="_blank">
+                    <img src="https://img.freepik.com/free-vector/organic-sale-ig-stories_23-2148591518.jpg?t=st=1722906742~exp=1722910342~hmac=91c74e1fee009b7dea9a10e3b112b31cc24810e90217b01076c1537cb1c84dc3&w=1380"
+                        alt="Iklan 3">
+                </a>
+            </div>
+            <div class="ad-item">
+                <a href="https://example.com/ads3" target="_blank">
+                    <img src="https://img.freepik.com/free-vector/abstract-sale-instagram-post-collection-with-photo_23-2148286928.jpg?t=st=1722906767~exp=1722910367~hmac=8b355d97dae861e3a052583290b306fa3693119546f97944ed530bc5cb1b291c&w=1380"
+                        alt="Iklan 3">
+                </a>
+            </div>
+            <div class="ad-item">
+                <a href="https://example.com/ads3" target="_blank">
+                    <img src="https://img.freepik.com/free-vector/fashion-sale-banners-with-photo_23-2148219781.jpg?t=st=1722906826~exp=1722910426~hmac=c6f2d68fe085fcb3806b469ae8d02f25e151d4c45d1da4fa816ff0b05fd27b45&w=1380"
+                        alt="Iklan 3">
+                </a>
+            </div>
+        </div>
+    </div>
+    <section id="additional-products">
+        <h2 class="center-text">Produk Lainnya</h2>
+        <div id="additional-products-list" class="product-list">
+            <!-- Produk tambahan akan dimuat di sini dengan JavaScript -->
+        </div>
+    </section>
+    <div class="ad-container">
+        <div class="ad-title"></div>
+        <div class="ad-slider">
+            <div class="ad-item active">
+                <a href="https://example.com/ads1" target="_blank">
+                    <img src="https://img.freepik.com/free-photo/teenage-boy-his-younger-brother-wearing-denim-outfits-together_23-2150151078.jpg?t=st=1722936008~exp=1722939608~hmac=a0fde03a1571810e286a1a61591b71daa78a3795d689482c46d4c3cfb522372b&w=1380"
+                        alt="Iklan 1">
+                </a>
+            </div>
+            <div class="ad-item">
+                <a href="https://example.com/ads2" target="_blank">
+                    <img src="https://img.freepik.com/free-vector/flat-furniture-sale-instagram-story-collection_23-2148932676.jpg?t=st=1722936083~exp=1722939683~hmac=e4434b67146d7a5b83206d7c66dd409d675639f0ea5fecd39dec64018b7f954e&w=1380"
+                        alt="Iklan 2">
+                </a>
+            </div>
+            <div class="ad-item">
+                <a href="https://example.com/ads3" target="_blank">
+                    <img src="https://img.freepik.com/free-vector/organic-flat-furniture-sale-landing-page-with-photo_23-2148931015.jpg?t=st=1722936264~exp=1722939864~hmac=1cf3e858af5aba9dff8c9058c0dedaff2ee64f89edb00fd4b575c2e83d2b023d&w=1380"
+                        alt="Iklan 3">
+                </a>
+            </div>
+            <div class="ad-item">
+                <a href="https://example.com/ads3" target="_blank">
+                    <img src="https://img.freepik.com/free-vector/organic-flat-furniture-sale-landing-page_23-2148927462.jpg?t=st=1722935709~exp=1722939309~hmac=0102e20159cd87c49752d4d652692b6a2d83c1997163548b279aebe604926a61&w=1380"
+                        alt="Iklan 3">
+                </a>
+            </div>
+            <div class="ad-item">
+                <a href="https://example.com/ads3" target="_blank">
+                    <img src="https://img.freepik.com/free-vector/flat-furniture-sale-landing-page-template_23-2148922592.jpg?t=st=1722936206~exp=1722939806~hmac=8a8a839892af2153dfcff715b6481dec9d885cd8ba79742741d189a87b776088&w=1380"
+                        alt="Iklan 3">
+                </a>
+            </div>
+            <div class="ad-item">
+                <a href="https://example.com/ads3" target="_blank">
+                    <img src="https://img.freepik.com/free-vector/flat-big-furniture-sale-landing-page_23-2148941478.jpg?t=st=1722935513~exp=1722939113~hmac=6852630233a42d4beac6368bc27faaf94ec2ead0f98e4aee37bb4b4921295562&w=1380"
+                        alt="Iklan 3">
+                </a>
+            </div>
+        </div>
+    </div>
+    <section class="category-section">
+        <h2 class="center-text category-title">Kategori Produk</h2>
+        <div class="category-list">
+            <!-- Kategori akan dimuat di sini dengan JavaScript -->
+        </div>
+    </section>
+    <footer class="footer">
+        <div class="footer-links">
+            <a href="#about-us">Tentang Kami</a>
+            <a href="#customer-service">Layanan Pelanggan</a>
+            <a href="#developer">Developer</a>
+            <a href="#contact">Kontak</a>
+        </div>
+        <div class="footer-form">
+            <h2>Kirim Pesan</h2>
+            <form action="mailto:youremail@example.com" method="post" enctype="text/plain">
+                <input type="text" name="name" placeholder="Nama" required>
+                <input type="email" name="email" placeholder="Email" required>
+                <textarea name="message" rows="4" placeholder="Pesan" required></textarea>
+                <button type="submit">Kirim Pesan</button>
+            </form>
+            <!-- Tambahkan tombol keranjang dan daftar keranjang -->
+
+            <h2>Keranjang</h2>
+            <ul id="cart-list"></ul>
+            <button onclick="checkout()">Cek Out</button>
+        </div>
+        </div>
+    </footer>
+
+    <script>
+        const adSlider = document.querySelector('.ad-slider');
+
+        adSlider.addEventListener('mousedown', (e) => {
+            const startX = e.clientX;
+            const scrollLeft = adSlider.scrollLeft;
+
+            document.addEventListener('mousemove', (e) => {
+                adSlider.scrollLeft = scrollLeft - (e.clientX - startX);
+            });
+
+            document.addEventListener('mouseup', () => {
+                mnj
+                const adWidth = adSlider.querySelector('.ad').offsetWidth;
+                const snapTo = Math.round(adSlider.scrollLeft / adWidth) * adWidth;
+                adSlider.scrollLeft = snapTo;
+            });
+        });
+        const products = [
+            { id: 1, name: 'Produk 1', price: 100000, image: 'https://img.freepik.com/free-vector/monocolor-midnight-madness-marathon-t-shirt-design_742173-5733.jpg?t=st=1722915942~exp=1722919542~hmac=3e16e9e25a21145009acacec3cd340dd6499cc0395172746c031ba2e65b72dac&w=740' },
+            { id: 2, name: 'Kaos Kreem sablon', price: 200000, image: 'https://img.freepik.com/free-psd/mens-ultra-cotton-tee-mockup_126278-149.jpg?t=st=1722916903~exp=1722920503~hmac=bb851bfb65dc2263b1242ba087c5fdedb098b04338cb61312e1e6528ed06ad06&w=826' },
+            { id: 3, name: 'White denim jacket front view streetwear fashion', price: 300000, image: 'https://img.freepik.com/free-photo/white-denim-jacket-front-view-streetwear-fashion_53876-106035.jpg?t=st=1722917586~exp=1722921186~hmac=08ea08df05ba77bf53b2b7e19e364542143cfd0d25b32b63dfa4f763b47b8cb9&w=826' },
+            { id: 4, name: 'Kemeja Kotak', price: 400000, image: 'https://img.freepik.com/free-photo/beautiful-men-fashion-shirt_74190-5185.jpg?t=st=1722918352~exp=1722921952~hmac=938ff54e445f58b62165f55200966023250cd0fc030a5356527a07f4aabb7c35&w=1380' },
+            { id: 5, name: 'Sepatu Sneckers', price: 500000, image: 'https://img.freepik.com/free-psd/shoes-sale-social-media-post-square-banner-template-design_505751-2948.jpg?t=st=1722919354~exp=1722922954~hmac=b25fcd392c9facb18ad0a8804e0657a62023120d64f71194e8b1ed458dd2d1ea&w=826' },
+            { id: 6, name: 'White canvas sneakers on metal floor', price: 600000, image: 'https://img.freepik.com/free-photo/white-canvas-sneakers-metal-floor_53876-96612.jpg?t=st=1722919442~exp=1722923042~hmac=d60e379fbaf8e6c974148a2a9064ca19d12de92ca21557f77d514df20d5f9481&w=740' },
+            { id: 6, name: 'Sepatu Kulit', price: 600000, image: 'https://img.freepik.com/free-psd/shoes-sale-social-media-post-square-banner-template-design_505751-2904.jpg?t=st=1722918911~exp=1722922511~hmac=882952f08fc843ca08b5ab1825105fc2dfef9081f832dca4afbed78d33bae7c0&w=826' },
+            { id: 6, name: 'Man in brown suede sneakers', price: 600000, image: 'https://img.freepik.com/free-photo/man-brown-suede-sneakers_53876-96611.jpg?t=st=1722919589~exp=1722923189~hmac=294f2528646f6874d3edf925159774abe200c841d593554587fdfe0239be6efb&w=740' },
+            { id: 6, name: 'Sepatu spedermen', price: 600000, image: 'https://img.freepik.com/free-psd/sneakers-shoes-social-media-template_505751-3352.jpg?t=st=1722919656~exp=1722923256~hmac=8ede3f867d6da6e4462a74e49bfe6a7cc3393952e9d040b0d2bbd3a253184514&w=826' },
+
+        ];
+
+        const additionalProducts = [
+            { id: 7, name: 'Kemeja Polos Pria', price: 700000, image: 'https://img.freepik.com/free-photo/asian-man-face-mask-mockup_53876-97688.jpg?t=st=1722917285~exp=1722920885~hmac=9f963f413c3a18c3bc02a670b8bda8650d6b7d34d1d89a6188897a56cf64ef0b&w=740', link: 'https://img.freepik.com/free-photo/asian-man-face-mask-mockup_53876-97688.jpg?t=st=1722917285~exp=1722920885~hmac=9f963f413c3a18c3bc02a670b8bda8650d6b7d34d1d89a6188897a56cf64ef0b&w=740' },
+            { id: 8, name: 'kemeja Polos Wanita', price: 800000, image: 'https://img.freepik.com/free-photo/beautiful-woman-wearing-blue-shirt-apparel-studio-shoot_53876-102838.jpg?t=st=1722917384~exp=1722920984~hmac=94c4924addae2ac9e5b35a226e95f262228d5b927694ea55f2344e6a06acf222&w=740', link: 'https://img.freepik.com/free-photo/beautiful-woman-wearing-blue-shirt-apparel-studio-shoot_53876-102838.jpg?t=st=1722917384~exp=1722920984~hmac=94c4924addae2ac9e5b35a226e95f262228d5b927694ea55f2344e6a06acf222&w=740' },
+            { id: 9, name: 'Kemeja Polos Anak Wria', price: 900000, image: 'https://img.freepik.com/free-photo/young-caucasian-boy-looking-side-isolated-orange-background-with-copy-space_141793-75573.jpg?t=st=1722917679~exp=1722921279~hmac=0cfb81b17b2f62f2454d5422974b46d21c9580869a8c2fcedfcd40e7b9236727&w=1380', link: 'https://img.freepik.com/free-photo/young-caucasian-boy-looking-side-isolated-orange-background-with-copy-space_141793-75573.jpg?t=st=1722917679~exp=1722921279~hmac=0cfb81b17b2f62f2454d5422974b46d21c9580869a8c2fcedfcd40e7b9236727&w=1380' },
+            { id: 10, name: 'Kemeja Polos Anak Wanita', price: 900000, image: 'https://img.freepik.com/free-photo/young-woman-making-call-me-sign_23-2148212470.jpg?t=st=1722917751~exp=1722921351~hmac=f03061fb8fae17f65595177b9239ca35daaa7a466291bb55f069fc65c7d9171c&w=1380', link: 'https://img.freepik.com/free-photo/young-woman-making-call-me-sign_23-2148212470.jpg?t=st=1722917751~exp=1722921351~hmac=f03061fb8fae17f65595177b9239ca35daaa7a466291bb55f069fc65c7d9171c&w=1380' },
+            { id: 10, name: 'Kursi Santai', price: 900000, image: 'https://img.freepik.com/free-photo/picture-frame-by-velvet-armchair_53876-132788.jpg?t=st=1722918759~exp=1722922359~hmac=d9844be8b6429e7443768ffc2b4d9c4463ad11b6f9de6eb5596d22e877f4f5ef&w=740', link: 'https://img.freepik.com/free-photo/picture-frame-by-velvet-armchair_53876-132788.jpg?t=st=1722918759~exp=1722922359~hmac=d9844be8b6429e7443768ffc2b4d9c4463ad11b6f9de6eb5596d22e877f4f5ef&w=740' },
+            { id: 10, name: 'Kasur plus cewenya', price: 900000, image: 'https://img.freepik.com/free-photo/beautiful-asian-woman-lying-her-bedroom-bed-stretching-hands-looking-outside-waking-up-fro_1258-138814.jpg?t=st=1722918838~exp=1722922438~hmac=45d4a8600800452a720b30d52676ac63fe57ed8e81cf2482e2fa0a33f8030820&w=1380', link: 'https://img.freepik.com/free-photo/beautiful-asian-woman-lying-her-bedroom-bed-stretching-hands-looking-outside-waking-up-fro_1258-138814.jpg?t=st=1722918838~exp=1722922438~hmac=45d4a8600800452a720b30d52676ac63fe57ed8e81cf2482e2fa0a33f8030820&w=1380' },
+            { id: 10, name: 'Tas Hitam cangkleng', price: 900000, image: 'https://img.freepik.com/free-photo/man-with-black-belt-bag_53876-105032.jpg?t=st=1722918957~exp=1722922557~hmac=6a743a8a53d6733350c63002f080e502ea346c0e7f70622738968073ebb6e53c&w=740', link: 'https://img.freepik.com/free-photo/man-with-black-belt-bag_53876-105032.jpg?t=st=1722918957~exp=1722922557~hmac=6a743a8a53d6733350c63002f080e502ea346c0e7f70622738968073ebb6e53c&w=740' },
+            { id: 10, name: 'Tas Ngampus', price: 900000, image: 'https://img.freepik.com/free-photo/schoolkid-holding-her-backpack-shoulders_114579-45229.jpg?t=st=1722919042~exp=1722922642~hmac=b0f6b092af26b5ee953498a3e9ddad583aedb5580627eaa0906355f5a582a95a&w=1380', link: 'https://img.freepik.com/free-photo/schoolkid-holding-her-backpack-shoulders_114579-45229.jpg?t=st=1722919042~exp=1722922642~hmac=b0f6b092af26b5ee953498a3e9ddad583aedb5580627eaa0906355f5a582a95a&w=1380' },
+            { id: 10, name: 'Topi Kulit', price: 900000, image: 'https://img.freepik.com/free-photo/beautiful-woman-baseball-cap-headband-fashion-studio-shoot_53876-102175.jpg?t=st=1722919142~exp=1722922742~hmac=ffd70990025b18e99c7dfa871eb575ffeff6a80012351d68136512777ea3c103&w=740', link: 'https://img.freepik.com/free-photo/beautiful-woman-baseball-cap-headband-fashion-studio-shoot_53876-102175.jpg?t=st=1722919142~exp=1722922742~hmac=ffd70990025b18e99c7dfa871eb575ffeff6a80012351d68136512777ea3c103&w=740' },
+        ];
+
+        const categories = [
+            { id: 1, name: 'Baju', image: 'https://img.freepik.com/free-photo/boy-wearing-casual-white-sweatshirt_53876-97848.jpg?t=st=1722919861~exp=1722923461~hmac=acda964a54fdf3d79a6dd2e43b676f33343c0c26288f5ce68a11827d5b652c72&w=740', link: 'https://img.freepik.com/free-photo/boy-wearing-casual-white-sweatshirt_53876-97848.jpg?t=st=1722919861~exp=1722923461~hmac=acda964a54fdf3d79a6dd2e43b676f33343c0c26288f5ce68a11827d5b652c72&w=740' },
+            { id: 2, name: 'Kemeja', image: 'https://img.freepik.com/free-photo/full-shot-modern-boy-posing-with-sunglasses_23-2148423278.jpg?t=st=1722919956~exp=1722923556~hmac=ecce82e9f83188d9f91417157e2b5dee65432aac03c350b0e3700b667e0106dc&w=740', link: 'https://img.freepik.com/free-photo/full-shot-modern-boy-posing-with-sunglasses_23-2148423278.jpg?t=st=1722919956~exp=1722923556~hmac=ecce82e9f83188d9f91417157e2b5dee65432aac03c350b0e3700b667e0106dc&w=740' },
+            { id: 3, name: 'Kaos', image: 'https://img.freepik.com/free-photo/front-view-cute-child-boy-white-t-shirt-yellow-jeans-holding-green-skateboard-blue-floor_179666-1008.jpg?t=st=1722920059~exp=1722923659~hmac=07b36250ff797b632f9b423ef3223b0c9d4a97cce5c561e58938d2c538254ba5&w=740', link: 'https://img.freepik.com/free-photo/front-view-cute-child-boy-white-t-shirt-yellow-jeans-holding-green-skateboard-blue-floor_179666-1008.jpg?t=st=1722920059~exp=1722923659~hmac=07b36250ff797b632f9b423ef3223b0c9d4a97cce5c561e58938d2c538254ba5&w=740' },
+            { id: 3, name: 'Topi', image: 'https://img.freepik.com/free-photo/blonde-girl-black-tank-top-shorts-with-beanie-street-fashion-shoot_53876-126955.jpg?t=st=1722920164~exp=1722923764~hmac=d3bd9fc053fe7d9f88ad7bfff97d26b9c0b1d91c15207c5c38aa4f5b85da5a3a&w=740', link: 'https://img.freepik.com/free-photo/blonde-girl-black-tank-top-shorts-with-beanie-street-fashion-shoot_53876-126955.jpg?t=st=1722920164~exp=1722923764~hmac=d3bd9fc053fe7d9f88ad7bfff97d26b9c0b1d91c15207c5c38aa4f5b85da5a3a&w=740' },
+            { id: 3, name: 'Sepatu', image: 'https://img.freepik.com/free-photo/portrait-boy-with-face-painted_23-2148843665.jpg?t=st=1722920281~exp=1722923881~hmac=d902a1f925fbe3bc7c2ffea13671215ece0193ac788ab08bcd02df85c4c53ef0&w=740', link: 'https://img.freepik.com/free-photo/portrait-boy-with-face-painted_23-2148843665.jpg?t=st=1722920281~exp=1722923881~hmac=d902a1f925fbe3bc7c2ffea13671215ece0193ac788ab08bcd02df85c4c53ef0&w=740' },
+            { id: 3, name: 'Funeture', image: 'https://img.freepik.com/free-photo/home-entranceway-with-furniture-modern-decor_23-2150831866.jpg?t=st=1722920349~exp=1722923949~hmac=837e4e08a1262cb06803f605d80616b35a80ddd5888f5fab71b70aad3e726e98&w=740', link: 'https://img.freepik.com/free-photo/home-entranceway-with-furniture-modern-decor_23-2150831866.jpg?t=st=1722920349~exp=1722923949~hmac=837e4e08a1262cb06803f605d80616b35a80ddd5888f5fab71b70aad3e726e98&w=740' },
+        ];
+        const favorites = [];
+
+        function displayProducts(productList) {
+            const productContainer = document.getElementById('product-list');
+            productContainer.innerHTML = '';
+            productList.forEach(product => {
+                const productDiv = document.createElement('div');
+                productDiv.classList.add('product');
+                productDiv.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}">
+                    <h3>${product.name}</h3>
+                    <p>Rp ${product.price.toLocaleString()}</p>
+                    <button onclick="addToCart(${product.id})">Tambah ke Keranjang</button>
+                    <i class="bi bi-heart-fill favorite-icon" onclick="toggleFavorite(${product.id}, this)"></i>
+                `;
+                productContainer.appendChild(productDiv);
+            });
+        }
+
+        function displayAdditionalProducts() {
+            const additionalProductsContainer = document.getElementById('additional-products-list');
+            additionalProducts.forEach(product => {
+                const productDiv = document.createElement('div');
+                productDiv.classList.add('product');
+                productDiv.innerHTML = `
+                    <a href="${product.link}" target="_blank">
+                        <img src="${product.image}" alt="${product.name}">
+                        <h3>${product.name}</h3>
+                        <p>Rp ${product.price.toLocaleString()}</p>
+                    </a>
+                `;
+                additionalProductsContainer.appendChild(productDiv);
+            });
+        }
+
+        function displayCategories() {
+            const categoryList = document.querySelector('.category-list');
+            categories.forEach(category => {
+                const categoryDiv = document.createElement('div');
+                categoryDiv.classList.add('category');
+                categoryDiv.innerHTML = `
+                    <a href="${category.link}" target="_blank">
+                        <img src="${category.image}" alt="${category.name}">
+                        <h3>${category.name}</h3>
+                    </a>
+                `;
+                categoryList.appendChild(categoryDiv);
+            });
+        }
+
+        function addToCart(productId) {
+            alert('Produk berhasil ditambahkan ke keranjang!');
+        }
+
+        function toggleFavorite(productId, element) {
+            const favoriteIndex = favorites.findIndex(product => product.id === productId);
+            const product = products.find(product => product.id === productId);
+            if (favoriteIndex === -1) {
+                favorites.push(product);
+                element.classList.add('favorited');
+            } else {
+                favorites.splice(favoriteIndex, 1);
+                element.classList.remove('favorited');
+            }
+
+            updateFavorites();
+        }
+
+        function updateFavorites() {
+            const favoriteProducts = document.getElementById('favorite-products');
+            favoriteProducts.innerHTML = '';
+
+            if (favorites.length === 0) {
+                favoriteProducts.innerHTML = '<p>Tidak ada produk favorit</p>';
+                return;
+            }
+
+            favorites.forEach(product => {
+                const productDiv = document.createElement('div');
+                productDiv.classList.add('product');
+                productDiv.innerHTML = `
+                    <img src="${product.image}" alt="${product.name}">
+                    <h3>${product.name}</h3>
+                    <p>Rp ${product.price.toLocaleString()}</p>
+                `;
+                favoriteProducts.appendChild(productDiv);
+            });
+        }
+        function search() {
+            const searchInput = document.getElementById('search-input');
+            const searchText = searchInput.value.toLowerCase();
+            const productList = document.getElementById('product-list');
+
+            // Filter products based on search text
+            const filteredProducts = products.filter(product => product.name.toLowerCase().includes(searchText));
+
+            // Remove existing products and display filtered products
+            while (productList.firstChild) {
+                productList.removeChild(productList.firstChild);
+            }
+            displayProducts(filteredProducts);
+        }
+        function resetSearch() {
+            const searchInput = document.getElementById('search-input');
+            searchInput.value = '';
+
+            // Display all products
+            displayProducts(products);
+        }
+
+        // Add event listener to reset button
+        document.getElementById('reset-button').addEventListener('click', resetSearch);
+        // Add event listener to search button
+        document.getElementById('search-button').addEventListener('click', search);
+        function toggleMode() {
+            document.body.classList.toggle('dark-mode');
+            const icon = document.querySelector('.mode-toggle i');
+            icon.classList.toggle('bi-sun');
+            icon.classList.toggle('bi-moon');
+        }
+
+        displayProducts(products);
+        displayAdditionalProducts();
+        displayCategories();
+        // Tambahkan variabel global untuk menyimpan produk di keranjang
+        let cart = [];
+
+        // Tambahkan fungsi addToCart()
+        function addToCart(productId) {
+            // Temukan produk dengan id yang sesuai
+            const product = products.find(p => p.id === productId);
+            if (product) {
+                // Tambahkan produk ke keranjang
+                cart.push(product);
+                // Tampilkan pesan sukses
+                alert(`Produk berhasil ditambahkan ke keranjang: ${product.name}`);
+                // Tampilkan keranjang
+                displayCart();
+            }
+        }
+
+        // Tambahkan fungsi displayCart()
+        function displayCart() {
+            // Ambil elemen dari HTML
+            const cartList = document.getElementById('cart-list');
+            cartList.innerHTML = '';
+            // Tampilkan setiap produk di keranjang
+            cart.forEach(product => {
+                const li = document.createElement('li');
+                li.textContent = `${product.name} - Rp. ${product.price.toLocaleString()}`;
+                cartList.appendChild(li);
+            });
+        }
+        // Tambahkan fungsi checkout()
+        function checkout() {
+            // Periksa apakah keranjang kosong
+            if (cart.length === 0) {
+                alert('Keranjang kosong, silakan tambahkan produk terlebih dahulu.');
+                return;
+            }
+
+            // Tampilkan jumlah total harga produk di keranjang
+            const totalPrice = cart.reduce((total, product) => total + product.price, 0);
+            alert(`Total harga produk di keranjang: Rp. ${totalPrice.toLocaleString()}`);
+
+            // Kosongkan keranjang
+            cart = [];
+            displayCart();
+        }
+    </script>
+</body>
+
+</html>
